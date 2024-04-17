@@ -2,40 +2,40 @@ package main
 
 import "math"
 
-func Perimeter(rectangle Rectangle) float64  {
-    return 2 * (rectangle.Width + rectangle.Height)
+func Perimeter(rectangle Rectangle) float64 {
+	return 2 * (rectangle.Width + rectangle.Height)
 }
 
 func Area(rectangle Rectangle) float64 {
-    return rectangle.Width * rectangle.Height
+	return rectangle.Width * rectangle.Height
 }
 
 type Rectangle struct {
-    Width float64
-    Height float64
+	Width  float64
+	Height float64
 }
 
 func (r Rectangle) Area() float64 {
-    return r.Height * r.Width
+	return r.Height * r.Width
 }
 
 type Circle struct {
-    Radius float64
+	Radius float64
 }
 
 func (r Circle) Area() float64 {
-    return math.Pi * math.Pow(r.Radius, 2)
+	return math.Pi * math.Pow(r.Radius, 2)
 }
 
 type Triangle struct {
-    Base float64
-    Height float64
+	Base   float64
+	Height float64
 }
 
 func (t Triangle) Area() float64 {
-    return (t.Base * t.Height) / 2
+	return (t.Base * t.Height) * 0.5
 }
 
 type Shape interface {
-    Area() float64
+	Area() float64
 }
