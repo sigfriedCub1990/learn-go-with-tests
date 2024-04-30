@@ -80,3 +80,15 @@ func TestPropertiesOfConversion(t *testing.T) {
 		t.Error("failed checks", err)
 	}
 }
+
+// Properties
+// - Can't have more than 3 consecutive symbols.
+// - Only I, X and C can be "subtractors".
+
+// TODO:
+// - Can you write property tests that check the other properties we described?
+// - Can you think of a way of making it so it's impossible for someone to call our code
+// with a number greater than 3999?
+// - You could return an error
+// - Or create a new type that cannot represent > 3999
+// What do you think is best?
