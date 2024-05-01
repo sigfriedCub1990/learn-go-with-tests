@@ -1,8 +1,14 @@
-package maths
+package clockface
 
 import (
 	"math"
 	"time"
+)
+
+const (
+	secondHandLength = 90
+	clockCentreX     = 150
+	clockCentreY     = 150
 )
 
 type Point struct {
@@ -11,7 +17,11 @@ type Point struct {
 }
 
 func SecondHand(t time.Time) Point {
-	return Point{150, 60}
+	p := secondHandPoint(t)
+	p = Point{p.X * secondHandLength, p.Y * secondHandLength} // scale
+	p = Point{p.X, -p.Y}                                      // flip
+	p = Point{p.X + clockCentreX, p.Y + clockCentreY}         //translate
+	return p
 }
 
 // 1 sec = 2pi / 60
