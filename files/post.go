@@ -2,6 +2,8 @@ package blogposts
 
 import (
 	"bufio"
+	"bytes"
+	"fmt"
 	"io"
 	"strings"
 )
@@ -13,8 +15,8 @@ const (
 )
 
 type Post struct {
-	Title, Description string
-	Tags               []string
+	Title, Description, Body string
+	Tags                     []string
 }
 
 func newPost(f io.Reader) (Post, error) {
@@ -29,5 +31,16 @@ func newPost(f io.Reader) (Post, error) {
 		Title:       readMetaLine(titleSeparator),
 		Description: readMetaLine(descriptionSeparator),
 		Tags:        strings.Split(readMetaLine(tagsSeparator), ", "),
+		Body:        readBody(scanner),
 	}, nil
+}
+
+func readBody(scanner *bufio.Scanner) string {
+	scanner.Scan() // ignore separator line
+
+	buf := bytes.Buffer{}
+	for scanner.Scan() {
+		fmt.Fprintln(&buf, scanner.Text())
+	}
+	return strings.TrimSuffix(buf.String(), "\n")
 }
