@@ -30,12 +30,7 @@ func TestNewBlogPosts(t *testing.T) {
 			t.Fatal("this should not fail")
 		}
 
-		got := posts[0]
-		want := blogposts.Post{Title: "Post 1"}
-
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("got %+v, want %+v", got, want)
-		}
+		assertPost(t, posts[0], blogposts.Post{Title: "Post 1"})
 	})
 
 	t.Run("returns an error if reading files fail", func(t *testing.T) {
@@ -47,4 +42,11 @@ func TestNewBlogPosts(t *testing.T) {
 			t.Errorf("expected an error, got none")
 		}
 	})
+}
+
+func assertPost(t *testing.T, got, want blogposts.Post) {
+	t.Helper()
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %+v, want %+v", got, want)
+	}
 }
