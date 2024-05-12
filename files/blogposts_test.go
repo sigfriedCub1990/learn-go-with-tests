@@ -19,9 +19,15 @@ func (s StubFailingFs) Open(name string) (fs.File, error) {
 
 func TestNewBlogPosts(t *testing.T) {
 	t.Run("read files from filesystem", func(t *testing.T) {
+		const (
+			firstBody = `Title: Post 1
+Description: Description 1`
+			secondBody = `Title: Post 1
+Description: Description 1`
+		)
 		fs := fstest.MapFS{
-			"hellow-world.md":  {Data: []byte("Title: Post 1")},
-			"hellow-world2.md": {Data: []byte("Title: Post 2")},
+			"hellow-world.md":  {Data: []byte(firstBody)},
+			"hellow-world2.md": {Data: []byte(secondBody)},
 		}
 
 		posts, err := blogposts.NewPostsFromFS(fs)
@@ -30,7 +36,10 @@ func TestNewBlogPosts(t *testing.T) {
 			t.Fatal("this should not fail")
 		}
 
-		assertPost(t, posts[0], blogposts.Post{Title: "Post 1"})
+		assertPost(t, posts[0], blogposts.Post{
+			Title:       "Post 1",
+			Description: "Description 1",
+		})
 	})
 
 	t.Run("returns an error if reading files fail", func(t *testing.T) {
